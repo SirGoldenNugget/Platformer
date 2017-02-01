@@ -8,8 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.minhvu.tankconquest.Game;
-
 public class Sprite
 {
 	private static BufferedImage spritesheet;

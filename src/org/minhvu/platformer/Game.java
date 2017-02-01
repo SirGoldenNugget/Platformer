@@ -16,6 +16,9 @@ public class Game extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 1898926707580001147L;
 	
+	private static Game instance;
+	private JFrame frame;
+	
 	private boolean running;
 	private Thread thread;
 	
@@ -36,6 +39,8 @@ public class Game extends JPanel implements Runnable
 	
 	public Game()
 	{
+		instance = this;
+		
 		state = STATE.MENU;
 		
 		KeyListener keylistener = new KeyListener()
@@ -114,7 +119,7 @@ public class Game extends JPanel implements Runnable
 
 		//Sound.BACKGROUND.loop();
 		
-		JFrame frame = new JFrame("Tank Conquest");
+		frame = new JFrame("Tank Conquest");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImage(Sprite.getSprite(1, 0, 84));
 		frame.add(this);
@@ -267,6 +272,16 @@ public class Game extends JPanel implements Runnable
 		state = STATE.PLAY;
 	}
 
+	public static Game getInstance()
+	{
+		return instance;
+	}
+	
+	public JFrame getFrame()
+	{
+		return frame;
+	}
+	
 	public void setState(STATE state)
 	{
 		this.state = state;

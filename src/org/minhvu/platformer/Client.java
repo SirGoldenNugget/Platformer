@@ -1,4 +1,4 @@
-package org.minhvu.networking;
+package org.minhvu.platformer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,7 +117,7 @@ public class Client
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		ChatClient client = new ChatClient();
+		Client client = new Client();
 		client.run();
 	}
 }
