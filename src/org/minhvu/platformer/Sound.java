@@ -22,12 +22,12 @@ public class Sound
 	
 	public Sound()
 	{
+		/*-
 		GAMEOVER = getAudioClip("/gameover.wav");
 		FIRE = getAudioClip("/fire.wav");
 		HIT = getAudioClip("/hit.wav");
 		EXPLOSION = getAudioClip("/explosion.wav");
-		
-		
+		*/
 	}
 	
 	private Clip getAudioClip(String path)

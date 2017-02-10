@@ -24,15 +24,15 @@ public class Menu
 	
 	public void paint(Graphics2D g2d)
 	{
-		Font titlefont = new Font("calibri", Font.BOLD, 525);
+		Font titlefont = new Font("calibri", Font.BOLD, 400);
 		Font subtitlefont = new Font("calibri", Font.BOLD, 300);
 		
 		g2d.setFont(titlefont);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString("TANK", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("TANK")) / 2), 400);
+		g2d.drawString("SKRT SKRT", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("SKRT SKRT")) / 2), 400);
 		
 		g2d.setFont(subtitlefont);
-		g2d.drawString("CONQUEST", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("CONQUEST")) / 2), 645);
+		g2d.drawString("PLATFORMER", (int) ((Game.getInstance().getWidth() - g2d.getFontMetrics().stringWidth("PLATFORMER")) / 2), 645);
 
 		Font buttonfont = new Font("calibri", Font.BOLD, 100);
 		g2d.setFont(buttonfont);

@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel implements Runnable
 {
+	public static void main(String[] args)
+	{
+		new Game();
+	}
+	
 	private static final long serialVersionUID = 1898926707580001147L;
 	
 	private static Game instance;
@@ -21,6 +26,12 @@ public class Game extends JPanel implements Runnable
 	
 	private boolean running;
 	private Thread thread;
+	
+	public static final SpriteSheet enemySpriteSheet = new SpriteSheet();
+	public static final SpriteSheet hudSpriteSheet = new SpriteSheet();
+	public static final SpriteSheet itemsSpriteSheet = new SpriteSheet();
+	public static final SpriteSheet tilesSpriteSheet = new SpriteSheet();
+	public static final SpriteSheet playerSpriteSheet = new SpriteSheet();
 	
 	public static enum STATE
 	{
@@ -35,7 +46,7 @@ public class Game extends JPanel implements Runnable
 	private Map map;
 	private Sound sound;
 	
-	private Object SPRITE_LOCK = new Object();
+	private Object synchronization = new Object();
 	
 	public Game()
 	{
@@ -43,7 +54,7 @@ public class Game extends JPanel implements Runnable
 		
 		state = STATE.MENU;
 		
-		KeyListener keylistener = new KeyListener()
+		KeyListener keyListener = new KeyListener()
 		{
 			@Override
 			public void keyTyped(KeyEvent e)
@@ -70,7 +81,7 @@ public class Game extends JPanel implements Runnable
 			}
 		};
 		
-		MouseListener mouselistener = new MouseListener()
+		MouseListener mouseListener = new MouseListener()
 		{
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -111,49 +122,28 @@ public class Game extends JPanel implements Runnable
 			}
 		};
 
-		addKeyListener(keylistener);
-		addMouseListener(mouselistener);
+		addKeyListener(keyListener);
+		addMouseListener(mouseListener);
 		setFocusable(true);
-
-		Sprite.loadSprite("/spritesheet.png");
-
-		//Sound.BACKGROUND.loop();
+		
+		enemySpriteSheet.loadSprite("/enemies_spritesheet.png");
+		hudSpriteSheet.loadSprite("/hud_spritesheet.png");
+		itemsSpriteSheet.loadSprite("/items_spritesheet.png");
+		tilesSpriteSheet.loadSprite("/tiles_spritesheet.png");
+		playerSpriteSheet.loadSprite("/p1_spritesheet.png");
 		
 		frame = new JFrame("Tank Conquest");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setIconImage(Sprite.getSprite(1, 0, 84));
+		frame.setIconImage(playerSpriteSheet.getSprite(67, 196, 66, 92));
 		frame.add(this);
 		frame.setSize(1920, 1080);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
 		frame.setResizable(false);
-		//frame.pack();
-		//frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		menu = new Menu();
-		
-		Map.MAPS maps = null;
-
-		switch ((int) (Math.random() * 4))
-		{
-			case 0:
-				maps = Map.MAPS.FOUR_CORNERS;
-				break;
-			case 1:
-				maps = Map.MAPS.ICE_AGE;
-				break;
-			case 2:
-				maps = Map.MAPS.FORGOTTEN_HERO;
-				break;
-			case 3:
-				maps = Map.MAPS.SQUAD_LIFE;
-				break;
-			default:
-				break;
-		}
-		
-		map = new Map(maps);
+		map = new Map(Map.MAPS.BLANK);
 		sound = new Sound();
 		
 		start();
@@ -220,9 +210,9 @@ public class Game extends JPanel implements Runnable
 	
 	private void update()
 	{
-		this.setBackground(Color.BLACK);
+		setBackground(new Color(0, 204, 255));
 		
-		synchronized (SPRITE_LOCK)
+		synchronized (synchronization)
 		{
 			if (state.equals(STATE.PLAY))
 			{
@@ -238,10 +228,10 @@ public class Game extends JPanel implements Runnable
 	{
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-
+		
 		super.paintComponent(g2d);
 		
-		synchronized(SPRITE_LOCK)
+		synchronized(synchronization)
 		{
 			map.paint(g2d);
 			
