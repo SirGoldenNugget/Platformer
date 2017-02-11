@@ -1,21 +1,18 @@
 package org.minhvu.platformer;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public class Sprite
+public abstract class Sprite
 {	
 	protected Point location;
-	protected Dimension dimension;
-
-	protected double initialangle;
-	protected double angle;
+	protected Animation animation;
 	
 	public Sprite()
 	{
 		location = new Point();
-		dimension = new Dimension();
 	}
 	
 	public Point getLocation()
@@ -30,26 +27,18 @@ public class Sprite
 	
 	public Dimension getDimensions()
 	{
-		return dimension;
-	}
-	
-	public void setDimensions(Dimension dimension)
-	{
-		this.dimension = dimension;
+		return new Dimension(animation.getSprite().getWidth(), animation.getSprite().getHeight());
 	}
 	
 	public Rectangle getBounds()
 	{
-		return new Rectangle(location, dimension);
+		return new Rectangle(location, new Dimension(animation.getSprite().getWidth(), animation.getSprite().getHeight()));
 	}
+
+	public abstract void update();
 	
-	public double getInitialAngle()
+	public void paint(Graphics2D g2d)
 	{
-		return initialangle;
-	}
-	
-	public double getAngle()
-	{
-		return angle;
+		g2d.drawImage(animation.getSprite(), location.x, location.y, Game.getInstance());
 	}
 }

@@ -45,6 +45,7 @@ public class Game extends JPanel implements Runnable
 	private Menu menu;
 	private Map map;
 	private Sound sound;
+	private Player player;
 	
 	private Object synchronization = new Object();
 	
@@ -67,7 +68,7 @@ public class Game extends JPanel implements Runnable
 			{
 				if (state.equals(STATE.PLAY))
 				{
-					
+					player.keyPressed(e);
 				}
 			}
 
@@ -76,7 +77,7 @@ public class Game extends JPanel implements Runnable
 			{
 				if (state.equals(STATE.PLAY))
 				{
-					
+					player.keyReleased(e);
 				}
 			}
 		};
@@ -130,7 +131,7 @@ public class Game extends JPanel implements Runnable
 		hudSpriteSheet.loadSprite("/hud_spritesheet.png");
 		itemsSpriteSheet.loadSprite("/items_spritesheet.png");
 		tilesSpriteSheet.loadSprite("/tiles_spritesheet.png");
-		playerSpriteSheet.loadSprite("/p1_spritesheet.png");
+		playerSpriteSheet.loadSprite("/p1_spritesheet_multidirectional.png");
 		
 		frame = new JFrame("Tank Conquest");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,6 +146,7 @@ public class Game extends JPanel implements Runnable
 		menu = new Menu();
 		map = new Map(Map.MAPS.BLANK);
 		sound = new Sound();
+		player = new Player();
 		
 		start();
 	}
@@ -216,7 +218,7 @@ public class Game extends JPanel implements Runnable
 		{
 			if (state.equals(STATE.PLAY))
 			{
-				
+				player.update();
 			}
 		}
 
@@ -237,7 +239,7 @@ public class Game extends JPanel implements Runnable
 			
 			if (state.equals(STATE.PLAY) || state.equals(STATE.END))
 			{
-				
+				player.paint(g2d);
 			}
 			
 			else if (state.equals(STATE.MENU) || state.equals(STATE.HELP))

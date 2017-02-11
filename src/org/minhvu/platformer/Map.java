@@ -83,14 +83,14 @@ public class Map
 			{
 				switch (this.map[i][j])
 				{
-					case 0:
+					case 0: // Clear Tile.
 						imagemap[i][j] = null;
 						break;
-					case 1:
+					case 1: // Square Grass Tile.
 						tile.x = 504;
 						tile.y = 576;
 						break;
-					case 2:
+					case 2: // Square Dirt Tile.
 						tile.x = 576;
 						tile.y = 864;
 						break;
