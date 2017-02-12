@@ -33,6 +33,8 @@ public class Animation
 		this.currentframe = 0;
 		this.direction = 1;
 		this.totalframes = this.frames.size();
+		
+		start();
 	}
 
 	public void start()

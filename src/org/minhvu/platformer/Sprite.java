@@ -10,9 +10,28 @@ public abstract class Sprite
 	protected Point location;
 	protected Animation animation;
 	
+	protected enum DIRECTION
+	{
+		LEFT,
+		RIGHT
+	}
+	
+	protected enum STATE
+	{
+		WALK,
+		JUMP,
+		DUCK,
+		HURT
+	}
+	
+	protected DIRECTION direction;
+	protected STATE state;
+	
 	public Sprite()
 	{
 		location = new Point();
+		direction = DIRECTION.RIGHT;
+		state = STATE.WALK;
 	}
 	
 	public Point getLocation()
@@ -39,6 +58,14 @@ public abstract class Sprite
 	
 	public void paint(Graphics2D g2d)
 	{
-		g2d.drawImage(animation.getSprite(), location.x, location.y, Game.getInstance());
+		if (direction == DIRECTION.RIGHT)
+		{
+			g2d.drawImage(animation.getSprite(), location.x, location.y, Game.getInstance());
+		}
+		
+		if (direction == DIRECTION.LEFT)
+		{
+			g2d.drawImage(animation.getSprite(), location.x + animation.getSprite().getWidth(), location.y, -animation.getSprite().getWidth(), animation.getSprite().getHeight(), Game.getInstance());
+		}
 	}
 }

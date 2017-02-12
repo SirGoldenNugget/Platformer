@@ -131,7 +131,7 @@ public class Game extends JPanel implements Runnable
 		hudSpriteSheet.loadSprite("/hud_spritesheet.png");
 		itemsSpriteSheet.loadSprite("/items_spritesheet.png");
 		tilesSpriteSheet.loadSprite("/tiles_spritesheet.png");
-		playerSpriteSheet.loadSprite("/p1_spritesheet_multidirectional.png");
+		playerSpriteSheet.loadSprite("/p1_spritesheet.png");
 		
 		frame = new JFrame("Tank Conquest");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

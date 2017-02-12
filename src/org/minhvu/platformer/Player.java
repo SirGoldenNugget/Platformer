@@ -5,8 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Player extends Sprite
-{
-	private static BufferedImage[] moveRight = {
+{	
+	private static final int animationDelay = 5;
+	
+	private static BufferedImage[] move = {
 			Game.playerSpriteSheet.getSprite(0, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(73, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(146, 0, 72, 97),
@@ -19,48 +21,38 @@ public class Player extends Sprite
 			Game.playerSpriteSheet.getSprite(365, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(292, 98, 72, 97) };
 
-	private static BufferedImage[] moveLeft = {
-			Game.playerSpriteSheet.getSprite(0, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(73, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(146, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(0, 386, 72, 97),
-			Game.playerSpriteSheet.getSprite(73, 386, 72, 97),
-			Game.playerSpriteSheet.getSprite(146, 386, 72, 97),
-			Game.playerSpriteSheet.getSprite(219, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(292, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(219, 386, 72, 97),
-			Game.playerSpriteSheet.getSprite(365, 288, 72, 97),
-			Game.playerSpriteSheet.getSprite(292, 386, 72, 97) };
+	private static BufferedImage[] front = { Game.playerSpriteSheet.getSprite(0, 196, 66, 92) };
+	private static BufferedImage[] stand = { Game.playerSpriteSheet.getSprite(67, 196, 66, 92) };
+	private static BufferedImage[] duck = { Game.playerSpriteSheet.getSprite(365, 98, 69, 71) };
+	private static BufferedImage[] jump = { Game.playerSpriteSheet.getSprite(438, 93, 67, 94) };
+	private static BufferedImage[] hurt = { Game.playerSpriteSheet.getSprite(438, 0, 69, 92) };
 
-	private static BufferedImage[] standingRight = { Game.playerSpriteSheet.getSprite(67, 196, 66, 92) };
-	private static BufferedImage[] standingLeft = { Game.playerSpriteSheet.getSprite(375, 484, 66, 92) };
-	private static BufferedImage[] duckRight = { Game.playerSpriteSheet.getSprite(67, 196, 66, 92) };
-	private static BufferedImage[] duckLeft = { Game.playerSpriteSheet.getSprite(375, 484, 66, 92) };
-	private static BufferedImage[] jumpRight = { Game.playerSpriteSheet.getSprite(438, 93, 67, 94) };
-	private static BufferedImage[] jumpLeft = { Game.playerSpriteSheet.getSprite(438, 381, 67, 94) };
-	private static BufferedImage[] hurtRight = { Game.playerSpriteSheet.getSprite(438, 0, 69, 92) };
-	private static BufferedImage[] hurtLeft = { Game.playerSpriteSheet.getSprite(0, 0, 67, 92) };
+	private static final Animation moving = new Animation(move, animationDelay);
+	private static final Animation facing = new Animation(front, animationDelay);
+	private static final Animation standing = new Animation(stand, animationDelay);
+	private static final Animation ducking = new Animation(duck, animationDelay);
+	private static final Animation jumping = new Animation(jump, animationDelay);
+	private static final Animation hurting = new Animation(hurt, animationDelay);
 
-	private boolean uppressed;
-	private boolean downpressed;
-	private boolean leftpressed;
-	private boolean rightpressed;
+	private boolean upPressed;
+	private boolean downPressed;
+	private boolean leftPressed;
+	private boolean rightPressed;
 
 	private int speed;
 
 	public Player()
 	{
 		super();
-
-		animation = new Animation(standingLeft, 5);
-		animation.start();
+		
+		animation = standing;
 
 		location = new Point(0, 0);
 
-		uppressed = false;
-		downpressed = false;
-		leftpressed = false;
-		rightpressed = false;
+		upPressed = false;
+		downPressed = false;
+		leftPressed = false;
+		rightPressed = false;
 
 		speed = 5;
 	}
@@ -68,58 +60,59 @@ public class Player extends Sprite
 	@Override
 	public void update()
 	{
-		boolean moving = false;
-
-		if (uppressed)
-		{
-			location.y -= speed;
-			moving = true;
-		}
-
-		if (downpressed)
-		{
-			location.y += speed;
-			moving = true;
-		}
-
-		if (leftpressed)
+		if (leftPressed)
 		{
 			location.x -= speed;
-			moving = true;
+			animation = moving;
+			direction = DIRECTION.LEFT;
+			state = STATE.WALK;
 		}
 
-		if (rightpressed)
+		if (rightPressed)
 		{
 			location.x += speed;
-			moving = true;
+			animation = moving;
+			direction = DIRECTION.RIGHT;
+			state = STATE.WALK;
+		}
+		
+		if (upPressed)
+		{
+			location.y -= speed;
+			animation = jumping;
+			state = STATE.JUMP;
 		}
 
-		if (moving)
+		if (downPressed)
 		{
-			animation.update();
+			location.y += speed;
+			animation = ducking;
+			state = STATE.DUCK;
 		}
+		
+		animation.update();
 	}
 
 	public void keyReleased(KeyEvent e)
 	{
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
-			uppressed = false;
+			upPressed = false;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
-			downpressed = false;
+			downPressed = false;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
-			leftpressed = false;
+			leftPressed = false;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
-			rightpressed = false;
+			rightPressed = false;
 		}
 	}
 
@@ -127,22 +120,22 @@ public class Player extends Sprite
 	{
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
-			uppressed = true;
+			upPressed = true;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
-			downpressed = true;
+			downPressed = true;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
-			leftpressed = true;
+			leftPressed = true;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
-			rightpressed = true;
+			rightPressed = true;
 		}
 	}
 }
