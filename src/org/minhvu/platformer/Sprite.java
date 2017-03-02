@@ -16,22 +16,13 @@ public abstract class Sprite
 		RIGHT
 	}
 	
-	protected enum STATE
-	{
-		WALK,
-		JUMP,
-		DUCK,
-		HURT
-	}
-	
 	protected DIRECTION direction;
-	protected STATE state;
 	
 	public Sprite()
 	{
 		location = new Point();
+		
 		direction = DIRECTION.RIGHT;
-		state = STATE.WALK;
 	}
 	
 	public Point getLocation()

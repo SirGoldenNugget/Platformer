@@ -5,21 +5,15 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Player extends Sprite
-{	
+{
 	private static final int animationDelay = 5;
-	
-	private static BufferedImage[] move = {
-			Game.playerSpriteSheet.getSprite(0, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(73, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(146, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(0, 98, 72, 97),
-			Game.playerSpriteSheet.getSprite(73, 98, 72, 97),
-			Game.playerSpriteSheet.getSprite(146, 98, 72, 97),
-			Game.playerSpriteSheet.getSprite(219, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(292, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(219, 98, 72, 97),
-			Game.playerSpriteSheet.getSprite(365, 0, 72, 97),
-			Game.playerSpriteSheet.getSprite(292, 98, 72, 97) };
+
+	private static BufferedImage[] move = { Game.playerSpriteSheet.getSprite(0, 0, 72, 97),
+			Game.playerSpriteSheet.getSprite(73, 0, 72, 97), Game.playerSpriteSheet.getSprite(146, 0, 72, 97),
+			Game.playerSpriteSheet.getSprite(0, 98, 72, 97), Game.playerSpriteSheet.getSprite(73, 98, 72, 97),
+			Game.playerSpriteSheet.getSprite(146, 98, 72, 97), Game.playerSpriteSheet.getSprite(219, 0, 72, 97),
+			Game.playerSpriteSheet.getSprite(292, 0, 72, 97), Game.playerSpriteSheet.getSprite(219, 98, 72, 97),
+			Game.playerSpriteSheet.getSprite(365, 0, 72, 97), Game.playerSpriteSheet.getSprite(292, 98, 72, 97) };
 
 	private static BufferedImage[] front = { Game.playerSpriteSheet.getSprite(0, 196, 66, 92) };
 	private static BufferedImage[] stand = { Game.playerSpriteSheet.getSprite(67, 196, 66, 92) };
@@ -40,12 +34,14 @@ public class Player extends Sprite
 	private boolean rightPressed;
 
 	private int speed;
+	private int gravity;
+	private int vertical;
 
 	public Player()
 	{
 		super();
-		
-		animation = standing;
+
+		animation = facing;
 
 		location = new Point(0, 0);
 
@@ -55,17 +51,30 @@ public class Player extends Sprite
 		rightPressed = false;
 
 		speed = 5;
+
+		gravity = 1;
+		vertical = 0;
 	}
 
 	@Override
 	public void update()
 	{
+		if (!upPressed && location.y + animation.getSprite().getHeight() < Game.getInstance().getHeight() - (70 * 2) - 40)
+		{
+			location.y += gravity;
+			gravity++;
+		}
+
+		else
+		{
+			gravity = 1;
+		}
+
 		if (leftPressed)
 		{
 			location.x -= speed;
 			animation = moving;
 			direction = DIRECTION.LEFT;
-			state = STATE.WALK;
 		}
 
 		if (rightPressed)
@@ -73,23 +82,25 @@ public class Player extends Sprite
 			location.x += speed;
 			animation = moving;
 			direction = DIRECTION.RIGHT;
-			state = STATE.WALK;
 		}
-		
+
 		if (upPressed)
 		{
 			location.y -= speed;
 			animation = jumping;
-			state = STATE.JUMP;
 		}
 
 		if (downPressed)
 		{
 			location.y += speed;
 			animation = ducking;
-			state = STATE.DUCK;
 		}
-		
+
+		if (!leftPressed && !rightPressed && !upPressed && !downPressed)
+		{
+			animation = standing;
+		}
+
 		animation.update();
 	}
 
