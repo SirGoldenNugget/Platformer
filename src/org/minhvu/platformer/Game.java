@@ -1,16 +1,11 @@
 package org.minhvu.platformer;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Game extends JPanel implements Runnable
 {
@@ -33,7 +28,7 @@ public class Game extends JPanel implements Runnable
 	public static final SpriteSheet tilesSpriteSheet = new SpriteSheet();
 	public static final SpriteSheet playerSpriteSheet = new SpriteSheet();
 	
-	public static enum STATE
+	public enum STATE
 	{
 		MENU,
 		PLAY,
