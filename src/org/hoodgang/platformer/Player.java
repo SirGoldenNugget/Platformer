@@ -1,6 +1,6 @@
-package org.minhvu.platformer;
+package org.hoodgang.platformer;
 
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -8,24 +8,22 @@ public class Player extends Sprite
 {
 	private static final int animationDelay = 5;
 
-	private static BufferedImage[] move = { Game.playerSpriteSheet.getSprite(0, 0, 72, 97),
+	private static BufferedImage[] move = {Game.playerSpriteSheet.getSprite(0, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(73, 0, 72, 97), Game.playerSpriteSheet.getSprite(146, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(0, 98, 72, 97), Game.playerSpriteSheet.getSprite(73, 98, 72, 97),
 			Game.playerSpriteSheet.getSprite(146, 98, 72, 97), Game.playerSpriteSheet.getSprite(219, 0, 72, 97),
 			Game.playerSpriteSheet.getSprite(292, 0, 72, 97), Game.playerSpriteSheet.getSprite(219, 98, 72, 97),
-			Game.playerSpriteSheet.getSprite(365, 0, 72, 97), Game.playerSpriteSheet.getSprite(292, 98, 72, 97) };
-
-	private static BufferedImage[] front = { Game.playerSpriteSheet.getSprite(0, 196, 66, 92) };
-	private static BufferedImage[] stand = { Game.playerSpriteSheet.getSprite(67, 196, 66, 92) };
-	private static BufferedImage[] duck = { Game.playerSpriteSheet.getSprite(365, 98, 69, 71) };
-	private static BufferedImage[] jump = { Game.playerSpriteSheet.getSprite(438, 93, 67, 94) };
-	private static BufferedImage[] hurt = { Game.playerSpriteSheet.getSprite(438, 0, 69, 92) };
-
+			Game.playerSpriteSheet.getSprite(365, 0, 72, 97), Game.playerSpriteSheet.getSprite(292, 98, 72, 97)};
 	private static final Animation moving = new Animation(move, animationDelay);
+	private static BufferedImage[] front = {Game.playerSpriteSheet.getSprite(0, 196, 66, 92)};
 	private static final Animation facing = new Animation(front, animationDelay);
+	private static BufferedImage[] stand = {Game.playerSpriteSheet.getSprite(67, 196, 66, 92)};
 	private static final Animation standing = new Animation(stand, animationDelay);
+	private static BufferedImage[] duck = {Game.playerSpriteSheet.getSprite(365, 98, 69, 71)};
 	private static final Animation ducking = new Animation(duck, animationDelay);
+	private static BufferedImage[] jump = {Game.playerSpriteSheet.getSprite(438, 93, 67, 94)};
 	private static final Animation jumping = new Animation(jump, animationDelay);
+	private static BufferedImage[] hurt = {Game.playerSpriteSheet.getSprite(438, 0, 69, 92)};
 	private static final Animation hurting = new Animation(hurt, animationDelay);
 
 	private boolean upPressed;

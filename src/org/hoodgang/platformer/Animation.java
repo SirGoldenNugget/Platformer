@@ -1,4 +1,4 @@
-package org.minhvu.platformer;
+package org.hoodgang.platformer;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.minhvu.platformer;
+package org.hoodgang.platformer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ public class Game extends JPanel implements Runnable
 	};
 	
 	private STATE state;
-	private Menu menu;
+	private org.hoodgang.platformer.Menu menu;
 	private Map map;
 	private Sound sound;
 	private Player player;
@@ -138,7 +138,7 @@ public class Game extends JPanel implements Runnable
 		frame.setResizable(false);
 		frame.setVisible(true);
 		
-		menu = new Menu();
+		menu = new org.hoodgang.platformer.Menu();
 		map = new Map(Map.MAPS.BLANK);
 		sound = new Sound();
 		player = new Player();

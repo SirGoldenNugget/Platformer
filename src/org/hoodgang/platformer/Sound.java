@@ -1,4 +1,4 @@
-package org.minhvu.platformer;
+package org.hoodgang.platformer;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
